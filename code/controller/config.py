@@ -1,13 +1,3 @@
-<<<<<<< Updated upstream
-from ev3dev2.motor import OUTPUT_B, OUTPUT_C
-
-LEFT_MOTOR_PORT = OUTPUT_C
-RIGHT_MOTOR_PORT = OUTPUT_B
-
-WHEEL_DIAMETER = 0.056 #m
-AXLE_LENGTH = 0.165 #m
-HEARTBEAT_PERIOD = 0.02 # 50 Hz
-=======
 #!/usr/bin/env python3
 
 """
@@ -59,4 +49,3 @@ RIGHT_SENSOR_PORT = OUTPUT_B
 
 # -------- Odometry --------- #
 HEARTBEAT_PERIOD = 1000.0/120.0 # ms (120 Hz)
->>>>>>> Stashed changes
