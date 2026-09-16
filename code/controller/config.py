@@ -33,6 +33,7 @@ CMPUT 312 collaboration policy.
 import math
 
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D
+from ev3dev2.sensor.lego import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 
 # ==================== Constants ==================== #
 
@@ -44,8 +45,8 @@ WHEEL_CIRCUMFRENCE = math.pi * WHEEL_DIAMETER #mm
 LEFT_MOTOR_PORT = OUTPUT_D
 RIGHT_MOTOR_PORT = OUTPUT_A
 
-LEFT_SENSOR_PORT = OUTPUT_C
-RIGHT_SENSOR_PORT = OUTPUT_B
+LEFT_SENSOR_PORT = INPUT_4
+RIGHT_SENSOR_PORT = INPUT_1
 
 # -------- Odometry --------- #
 HEARTBEAT_PERIOD = 1000.0/120.0 # ms (120 Hz)
