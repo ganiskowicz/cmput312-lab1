@@ -34,4 +34,8 @@ htmlcov/
 # Build/package files
 build/
 dist/
+<<<<<<< Updated upstream
 *.egg-info/
+=======
+*.egg-info/
+>>>>>>> Stashed changes

@@ -1,0 +1,6 @@
+- Address Fix mes.
+- Documentation.
+- Im gonna do some nice plots for the errors. Overlays for the paths. Will need reference points.
+- Gotta make sure the default velocities are good. 
+- Does reference frame/init make sense? 
+- Also, fix direction in robot functions.
