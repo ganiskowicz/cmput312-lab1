@@ -37,7 +37,8 @@ import config as Config
 from ev3dev2.motor import LargeMotor, SpeedPercent, SpeedRPS
 from ev3dev2.sensor.lego import ColorSensor
 from odometry import Odometry
-from util import clamp
+from util import clamp, sign
+from menu import Menu, Option
 
 # ==================== Constants ==================== #
 
@@ -100,8 +101,6 @@ class Robot:
         return
 
     def moveAsync(self, distance, velocity=100.0):
-        print("Fix me: Direction ill defined")
-
         velocityRPS = velocity / self.odometry.wheelCircumference
         duration = abs(distance / velocity)
 
@@ -119,17 +118,15 @@ class Robot:
         return
 
     def pivotAsync(self, angleDeg, angularVelocityDeg=90.0):
-        print("Fix me: Direction ill defined")
-
         angle = math.radians(angleDeg)
-        angularVelocity = math.radians(angularVelocityDeg)
+        angularVelocity = abs(math.radians(angularVelocityDeg)) * sign(angularVelocityDeg)
         duration = abs(angle / angularVelocity)
 
         velocity = angularVelocity * (self.odometry.wheelBase / 2)
         velocityRPS = velocity / self.odometry.wheelCircumference
 
-        self.leftMotor.on(SpeedRPS(velocityRPS), False, False)
-        self.rightMotor.on(SpeedRPS(-velocityRPS), False, False)
+        self.leftMotor.on(SpeedRPS(-velocityRPS), False, False)
+        self.rightMotor.on(SpeedRPS(velocityRPS), False, False)
 
         start = time.monotonic()
         while time.monotonic() - start < duration:
@@ -190,18 +187,36 @@ class Robot:
 def main():
     robot = Robot()
 
+    # menu = Menu("Title", [
+    #     Option("One", robot.arcAsync),
+    #     Option("Two", robot.arcAsync),
+    #     Option("Three", robot.arcAsync),
+    #     Option("Four", robot.arcAsync),
+    # ])
+
+    # result = menu.inputAsync()
+
     robot.moveAsync(150.0, 50.0)
+    robot.printPose()
     robot.pivotAsync(90.0, 15.0)
     robot.printPose()
-    robot.moveAsync(150.0, 50.0)
-    robot.pivotAsync(90.0, 15.0)
+
+    time.sleep(3)
+
+    robot.moveAsync(150.0, -50.0)
     robot.printPose()
-    robot.moveAsync(150.0, 50.0)
-    robot.pivotAsync(90.0, 15.0)
+    robot.pivotAsync(90.0, -15.0)
     robot.printPose()
-    robot.moveAsync(150.0, 50.0)
-    robot.pivotAsync(90.0, 15.0)
-    robot.printPose()
+
+    # robot.moveAsync(150.0, 50.0)
+    # robot.pivotAsync(90.0, 15.0)
+    # robot.printPose()
+    # robot.moveAsync(150.0, 50.0)
+    # robot.pivotAsync(90.0, 15.0)
+    # robot.printPose()
+    # robot.moveAsync(150.0, 50.0)
+    # robot.pivotAsync(90.0, 15.0)
+    # robot.printPose()
 
     return
 

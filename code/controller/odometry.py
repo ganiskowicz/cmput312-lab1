@@ -39,9 +39,7 @@ from ev3dev2.motor import LargeMotor
 
 # ===================== Module ====================== #
 class Pose:
-    def __init__(self, leftTicks, rightTicks, x=0, y=0, angle=0, time=time.monotonic()):
-        print("Fix me: Reference frame unclear")
-
+    def __init__(self, leftTicks, rightTicks, time, x=0, y=0, angle=0):
         self.x = x
         self.y = y
         self.angle = angle
@@ -53,19 +51,12 @@ class Pose:
         return
 
     def __str__(self):
-        angleDegrees = 180 - (180 - math.degrees(self.pose.angle)) % 360
-        return f"x = {self.pose.x:9.3f} mm, y = {self.pose.y:9.3f} mm, angle = {angleDegrees:7.2f}°"
+        angleDegrees = 180 - (180 - math.degrees(self.angle)) % 360
+        return "x = {:9.3f} mm, y = {:9.3f} mm, angle = {:7.2f} deg".format(self.x, self.y, angleDegrees)
 
-    def fromPose(self, pose):
-        self.x = pose.x
-        self.y = pose.y
-        self.angle = pose.angle
-
-        self.time = pose.time
-        self.leftTicks = pose.leftTicks
-        self.rightTicks = pose.rightTicks
-
-        return
+    def fromPose(_, pose):
+        copy = Pose(pose.leftTicks, pose.rightTicks, pose.time, pose.x, pose.y, pose.angle)
+        return copy
 
 class Odometry:
     def __init__(self, leftMotor, rightMotor, wheelDiameter, wheelBase):
@@ -78,8 +69,8 @@ class Odometry:
         self.wheelRadius = wheelDiameter / 2.0
         self.wheelCircumference = wheelDiameter * math.pi
 
-        self.pose = Pose(self.leftMotor.position, self.rightMotor.position)
-        self.reset()
+        self.pose = Pose(self.leftMotor.position, self.rightMotor.position, time.monotonic())
+        self.resetPose()
 
         return
 
@@ -114,15 +105,17 @@ class Odometry:
             # Large Arc, Do Not Divide By Zero. Fine To Approximate Arc As Line.
             xDelta = linearVelocity * dt * math.cos(oldPose.angle)
             yDelta = linearVelocity * dt * math.sin(oldPose.angle)
+            print(xDelta, yDelta)
         else:
             # Exact Arc Integration
             xDelta = (linearVelocity / angularVelocity) * (math.sin(newAngle) - math.sin(oldPose.angle))
-            yDelta = (linearVelocity / angularVelocity) * (math.cos(newAngle) - math.cos(oldPose.angle))
+            yDelta = (linearVelocity / angularVelocity) * (math.cos(oldPose.angle) - math.cos(newAngle))
+            print(xDelta, yDelta)
 
         newX = oldPose.x + xDelta
         newY = oldPose.y + yDelta
 
-        newPose = Pose(newLeftTicks, newRightTicks, newX, newY, newAngle, newTime)
+        newPose = Pose(newLeftTicks, newRightTicks, newTime, newX, newY, newAngle)
         self.pose = newPose
 
         return
@@ -132,10 +125,8 @@ class Odometry:
 
     def printPose(self):
         print(self.pose)
-
         return
 
     def resetPose(self):
-        self.pose = Pose(self.leftMotor.position, self.rightMotor.position)
-
+        self.pose = Pose(self.leftMotor.position, self.rightMotor.position, time.monotonic())
         return

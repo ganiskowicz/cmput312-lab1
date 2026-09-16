@@ -32,3 +32,6 @@ CMPUT 312 collaboration policy.
 # ===================== Module ====================== #
 def clamp(n, min, max):
     return max(min, min(n, max))
+
+def sign(x):
+    return (x > 0) - (x < 0)
