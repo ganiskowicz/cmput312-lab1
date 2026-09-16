@@ -32,6 +32,8 @@ CMPUT 312 collaboration policy.
 
 # Written By Dominik Vrbanek
 
+print("Task 5 starting...")
+
 # ===================== Modules ===================== #
 import time
 
@@ -69,6 +71,14 @@ def wait_for_enter():
     while btn.enter:
         time.sleep(0.05)
     while not btn.enter:
+        time.sleep(0.05)
+    time.sleep(0.2)
+
+
+def wait_for_backspace():
+    while btn.backspace:
+        time.sleep(0.05)
+    while not btn.backspace:
         time.sleep(0.05)
     time.sleep(0.2)
 
@@ -204,6 +214,8 @@ def choose_behavior():
             time.sleep(0.5)
             return behaviors[idx][1]
         elif btn.backspace:
+            while btn.backspace:
+                time.sleep(0.05)
             return None
         time.sleep(0.05)
 
