@@ -29,9 +29,13 @@ CMPUT 312 collaboration policy.
 
 # Written By Graeme Aniskowicz
 
+# ==================== Constants ==================== #
+MIN = min
+MAX = max
+
 # ===================== Module ====================== #
 def clamp(n, min, max):
-    return max(min, min(n, max))
+    return MAX(min, MIN(n, max))
 
 def sign(x):
     return (x > 0) - (x < 0)

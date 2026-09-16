@@ -30,6 +30,10 @@ CMPUT 312 collaboration policy.
 # Written By Graeme Aniskowicz
 
 # ===================== Modules ===================== #
+import sys
+import os
+
+sys.path.append(os.path.abspath('../'))
 from controller.robot import Robot
 
 # ==================== Constants ==================== #

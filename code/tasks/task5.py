@@ -33,18 +33,21 @@ CMPUT 312 collaboration policy.
 # Written By Dominik Vrbanek
 
 print("Task 5 starting...")
-
 # ===================== Modules ===================== #
 import time
+import sys
+import os
 
 from ev3dev2.button import Button
 from ev3dev2.display import Display
 
-import controller.config as Config
+sys.path.append(os.path.abspath('../'))
 from controller.robot import Robot
+from controller import config as Config
 
 # ==================== Constants ==================== #
 # Set up the robot, display and buttons
+
 robot = Robot()
 btn = Button()
 display = Display()

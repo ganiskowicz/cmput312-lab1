@@ -32,13 +32,14 @@ CMPUT 312 collaboration policy.
 # ===================== Modules ===================== #
 import math
 import time
-import config as Config
 
 from ev3dev2.motor import LargeMotor, SpeedPercent, SpeedRPS
 from ev3dev2.sensor.lego import ColorSensor
-from odometry import Odometry
-from util import clamp, sign
-from menu import Menu, Option
+
+from controller import config as Config
+from controller.odometry import Odometry
+from controller.util import clamp, sign
+from controller.menu import Menu, Option
 
 # ==================== Constants ==================== #
 
@@ -187,26 +188,26 @@ class Robot:
 def main():
     robot = Robot()
 
-    # menu = Menu("Title", [
-    #     Option("One", robot.arcAsync),
-    #     Option("Two", robot.arcAsync),
-    #     Option("Three", robot.arcAsync),
-    #     Option("Four", robot.arcAsync),
-    # ])
+    menu = Menu("Title", [
+        Option("One", robot.arcAsync),
+        Option("Two", robot.arcAsync),
+        Option("Three", robot.arcAsync),
+        Option("Four", robot.arcAsync),
+    ])
 
-    # result = menu.inputAsync()
+    result = menu.inputAsync()
 
-    robot.moveAsync(150.0, 50.0)
-    robot.printPose()
-    robot.pivotAsync(90.0, 15.0)
-    robot.printPose()
+    # robot.moveAsync(150.0, 50.0)
+    # robot.printPose()
+    # robot.pivotAsync(90.0, 15.0)
+    # robot.printPose()
 
-    time.sleep(3)
+    # time.sleep(3)
 
-    robot.moveAsync(150.0, -50.0)
-    robot.printPose()
-    robot.pivotAsync(90.0, -15.0)
-    robot.printPose()
+    # robot.moveAsync(150.0, -50.0)
+    # robot.printPose()
+    # robot.pivotAsync(90.0, -15.0)
+    # robot.printPose()
 
     # robot.moveAsync(150.0, 50.0)
     # robot.pivotAsync(90.0, 15.0)
