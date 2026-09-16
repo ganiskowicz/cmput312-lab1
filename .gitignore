@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Linux/editor temp files
+*~
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Test/cache files
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Build/package files
+build/
+dist/
+*.egg-info/
