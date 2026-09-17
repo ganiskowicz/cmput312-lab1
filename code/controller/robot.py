@@ -102,8 +102,14 @@ class Robot:
         return
 
     def moveAsync(self, distance, velocity=100.0):
+        if distance == 0 or velocity == 0:
+            return
+
+        direction = sign(distance) * sign(velocity)
+        velocity = abs(velocity) * direction
+
         velocityRPS = velocity / self.odometry.wheelCircumference
-        duration = abs(distance / velocity)
+        duration = abs(distance) / abs(velocity)
 
         self.leftMotor.on(SpeedRPS(velocityRPS), False, False)
         self.rightMotor.on(SpeedRPS(velocityRPS), False, False)
@@ -140,48 +146,79 @@ class Robot:
         return
 
     def arcAsync(self, angleDeg, angularVelocityDeg=90.0, radius=0.0):
-        print("Fix me: Needs Implementation")
+        angle = math.radians(angleDeg)
+        angularVelocity = math.radians(angularVelocityDeg)
 
-        # angle = math.radians(angleDeg)
-        # angularVelocity = math.radians(angularVelocityDeg)
-        # duration = abs(angle / angularVelocity)
+        duration = abs(angle / angularVelocity)
 
-        # velocity = angularVelocity * (self.odometry.wheelBase / 2)
-        # velocityRPS = velocity / self.odometry.wheelCircumference
+        # v = omega * r; each wheel has a different radius from the centre of rotation
+        leftVelocity = angularVelocity * (radius - self.odometry.wheelBase / 2)
+        rightVelocity = angularVelocity * (radius + self.odometry.wheelBase / 2)
 
-        # self.leftMotor.on(SpeedRPS(velocityRPS), False, False)
-        # self.rightMotor.on(SpeedRPS(-velocityRPS), False, False)
+        leftRPS = leftVelocity / self.odometry.wheelCircumference
+        rightRPS = rightVelocity / self.odometry.wheelCircumference
 
-        # start = time.monotonic()
-        # while time.monotonic() - start < duration:
-        #     self.odometry.heartbeat()
-        #     time.sleep(Config.HEARTBEAT_PERIOD / 1000)
+        self.leftMotor.on(SpeedRPS(leftRPS), False, False)
+        self.rightMotor.on(SpeedRPS(rightRPS), False, False)
 
-        # self.stop()
-        # self.odometry.heartbeat()
+        start = time.monotonic()
+        while time.monotonic() - start < duration:
+            self.odometry.heartbeat()
+            time.sleep(Config.HEARTBEAT_PERIOD / 1000)
+
+        self.stop()
+        self.odometry.heartbeat()
 
         return
 
     def lemniscateAsync(self, scale, velocity=100.0):
-        print("Fix me: Needs Implementation")
+        # conversion to mm (graeme why u use meters)
+        a = scale * 1000.0
 
-        # angle = math.radians(angleDeg)
-        # angularVelocity = math.radians(angularVelocityDeg)
-        # duration = abs(angle / angularVelocity)
+        u = 0.0
+        dt = Config.HEARTBEAT_PERIOD / 1000
 
-        # velocity = angularVelocity * (self.odometry.wheelBase / 2)
-        # velocityRPS = velocity / self.odometry.wheelCircumference
+        while u < 2 * math.pi:
+            # Gerono lemniscate:
+            #   x = a sin(u)
+            #   y = a sin(u) cos(u)
 
-        # self.leftMotor.on(SpeedRPS(velocityRPS), False, False)
-        # self.rightMotor.on(SpeedRPS(-velocityRPS), False, False)
+            dx = a * math.cos(u)
+            dy = a * math.cos(2 * u)
 
-        # start = time.monotonic()
-        # while time.monotonic() - start < duration:
-        #     self.odometry.heartbeat()
-        #     time.sleep(Config.HEARTBEAT_PERIOD / 1000)
+            ddx = -a * math.sin(u)
+            ddy = -2 * a * math.sin(2 * u)
 
-        # self.stop()
-        # self.odometry.heartbeat()
+            ds = math.sqrt(dx * dx + dy * dy)
+
+            # Curvature of a parametric curve
+            curvature = (
+                dx * ddy - dy * ddx
+            ) / (ds ** 3)
+
+            leftVelocity = velocity * (
+                1 - curvature * self.odometry.wheelBase / 2
+            )
+
+            rightVelocity = velocity * (
+                1 + curvature * self.odometry.wheelBase / 2
+            )
+
+            leftRPS = leftVelocity / self.odometry.wheelCircumference
+            rightRPS = rightVelocity / self.odometry.wheelCircumference
+
+            self.leftMotor.on(SpeedRPS(leftRPS), False, False)
+            self.rightMotor.on(SpeedRPS(rightRPS), False, False)
+
+            self.odometry.heartbeat()
+
+            # advance at constant linear velocity
+            u += abs(velocity) / ds * dt
+
+            time.sleep(dt)
+
+        self.stop()
+        self.odometry.heartbeat()
 
         return
 
