@@ -97,7 +97,7 @@ class Robot:
     def executeCommandsAsync(self, commands):
         for command in commands:
             leftPower, rightPower, duration = command
-            self.executeCommand(leftPower, rightPower, duration)
+            self.executeCommandAsync(leftPower, rightPower, duration)
 
         return
 

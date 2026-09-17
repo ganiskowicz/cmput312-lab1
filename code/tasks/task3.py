@@ -35,6 +35,7 @@ import os
 
 sys.path.append(os.path.abspath('../'))
 from controller.robot import Robot
+from controller.menu import Menu, Option
 
 # ==================== Constants ==================== #
 LINEAR_VELOCITY = 50.0 # mm/s
@@ -51,7 +52,7 @@ LEMNISCATE_SCALE = 0.5
 
 # ===================== Module ====================== #
 def straightLine():
-    print("Fix me: Finish Implementation")
+    print("Fix me: Finish Implementation like task2")
 
     robot = Robot()
 
@@ -61,7 +62,7 @@ def straightLine():
     return
 
 def circle():
-    print("Fix me: Finish Implementation")
+    print("Fix me: Finish Implementation like task2")
 
     robot = Robot()
 
@@ -71,7 +72,7 @@ def circle():
     return
 
 def rectangle():
-    print("Fix me: Finish Implementation")
+    print("Fix me: Finish Implementation like task2")
 
     robot = Robot()
 
@@ -85,7 +86,7 @@ def rectangle():
     return
 
 def lemniscate():
-    print("Fix me: Finish Implementation")
+    print("Fix me: Finish Implementation like task2")
 
     robot = Robot()
 
@@ -95,10 +96,12 @@ def lemniscate():
     return
 
 def main():
-    straightLine()
-    # circle()
-    # rectangle()
-    # lemniscate()
+    Menu("Select Shape", [
+        Option("Straight Line", straightLine),
+        Option("Circle", circle),
+        Option("Rectangle", rectangle),
+        Option("Lemniscate", lemniscate),
+    ]).inputAsync()
 
     return
 

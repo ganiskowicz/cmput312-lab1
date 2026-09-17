@@ -35,6 +35,8 @@ import os
 
 sys.path.append(os.path.abspath('../'))
 from controller.robot import Robot
+from controller.odometry import Pose
+from controller.menu import Menu, Option
 
 # ==================== Constants ==================== #
 LINEAR_DISTANCE = 250.0 # mm
@@ -44,11 +46,9 @@ ANGULAR_VELOCITY = 45.0 # deg/s
 
 # ===================== Module ====================== #
 def linear():
-    print("Fix me: Finish Implementation")
-
     robot = Robot()
 
-    print("Performing Straight-Line Error Analysis")
+    print("Performing Linear Error Analysis")
     print("The current pose is...")
     robot.printPose()
 
@@ -59,16 +59,22 @@ def linear():
     robot.printPose()
 
     print("The error is ...")
-    # Error Calculation Formula
+    expectedPose = Pose.fromXYA(LINEAR_DISTANCE, 0, 0)
+    actualPose = robot.getPose()
+
+    Menu("Straight Line Error", [
+        Option("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)), lambda: None),
+        Option("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)), lambda: None),
+        Option("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)), lambda: None),
+        Option("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180), lambda: None),
+    ]).inputAsync()
 
     return
 
-def rotational():
-    print("Fix me: Finish Implementation")
-
+def angular():
     robot = Robot()
 
-    print("Performing Rotational Error Analysis")
+    print("Performing Angular Error Analysis")
     print("The current pose is...")
     robot.printPose()
 
@@ -79,13 +85,26 @@ def rotational():
     robot.printPose()
 
     print("The error is ...")
-    # Error Calculation Formula
+    expectedPose = Pose.fromXYA(0, 0, 0)
+    actualPose = robot.getPose()
 
-    return
+    Menu("Rotational Error", [
+        Option("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)), lambda: None),
+        Option("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)), lambda: None),
+        Option("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)), lambda: None),
+        Option("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose)), lambda: None),
+    ]).inputAsync()
 
 def main():
-    linear()
-    # rotational()
+    running = [True]
+    while running[0]:
+        Menu("Select Error", [
+            Option("Straight Line", linear),
+            Option("Rotational", angular),
+            Option("Quit", lambda: running.__setitem__(0, False)),
+        ]).inputAsync()
+
+    Menu("Done", []).inputAsync()
 
     return
 

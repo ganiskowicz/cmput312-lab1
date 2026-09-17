@@ -54,9 +54,25 @@ class Pose:
         angleDegrees = 180 - (180 - math.degrees(self.angle)) % 360
         return "x = {:9.3f} mm, y = {:9.3f} mm, angle = {:7.2f} deg".format(self.x, self.y, angleDegrees)
 
-    def fromPose(_, pose):
+    def fromPose(pose):
         copy = Pose(pose.leftTicks, pose.rightTicks, pose.time, pose.x, pose.y, pose.angle)
         return copy
+
+    def fromXYA(x=0, y=0, angle=0):
+        pose = Pose(0, 0, time.monotonic(), x, y, angle)
+        return pose
+
+    def getTranslationError(self, expected):
+        return math.sqrt((self.x - expected.x)**2 + (self.y - expected.y)**2)
+
+    def getXError(self, expected):
+        return self.x - expected.x
+
+    def getYError(self, expected):
+        return self.y - expected.y
+
+    def getAngleError(self, expected):
+        return math.atan2(math.sin(expected.angle - self.angle), math.cos(expected.angle - self.angle))
 
 class Odometry:
     def __init__(self, leftMotor, rightMotor, wheelDiameter, wheelBase):
@@ -105,12 +121,10 @@ class Odometry:
             # Large Arc, Do Not Divide By Zero. Fine To Approximate Arc As Line.
             xDelta = linearVelocity * dt * math.cos(oldPose.angle)
             yDelta = linearVelocity * dt * math.sin(oldPose.angle)
-            print(xDelta, yDelta)
         else:
             # Exact Arc Integration
             xDelta = (linearVelocity / angularVelocity) * (math.sin(newAngle) - math.sin(oldPose.angle))
             yDelta = (linearVelocity / angularVelocity) * (math.cos(oldPose.angle) - math.cos(newAngle))
-            print(xDelta, yDelta)
 
         newX = oldPose.x + xDelta
         newY = oldPose.y + yDelta
