@@ -36,7 +36,7 @@ import os
 sys.path.append(os.path.abspath('../'))
 from controller.robot import Robot
 from controller.odometry import Pose
-from controller.menu import Menu, Option
+from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
 COMMANDS = [

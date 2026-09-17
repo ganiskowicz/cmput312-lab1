@@ -35,7 +35,7 @@ import os
 
 sys.path.append(os.path.abspath('../'))
 from controller.robot import Robot
-from controller.menu import Menu, Option
+from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
 LINEAR_VELOCITY = 50.0 # mm/s
@@ -96,11 +96,12 @@ def lemniscate():
     return
 
 def main():
-    Menu("Select Shape", [
-        Option("Straight Line", straightLine),
-        Option("Circle", circle),
-        Option("Rectangle", rectangle),
-        Option("Lemniscate", lemniscate),
+    Menu([
+        Text("Select Shape"),
+        Button("Straight Line", straightLine),
+        Button("Circle", circle),
+        Button("Rectangle", rectangle),
+        Button("Lemniscate", lemniscate),
     ]).inputAsync()
 
     return
