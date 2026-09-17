@@ -77,7 +77,9 @@ def wait_for_enter():
         time.sleep(0.05)
     time.sleep(0.2)
 
-
+# brickrun grabs the Back/backspace button as the system-level stop button and sends your process a termination signal.
+# so will just use the left button instead of the backspace button to stop the robot and go back to the menu.
+# comment it out when ready
 def wait_for_backspace():
     while btn.backspace:
         time.sleep(0.05)
@@ -119,7 +121,7 @@ def calibrate():
 # Each sensor drives the motor on its own side; brighter light means faster. The robot runs away from the light.
 def cowardice():
     while True:
-        if btn.backspace:
+        if btn.left:
             robot.stop()
             return
 
@@ -137,7 +139,7 @@ def cowardice():
 # Each sensor drives the motor on the opposite side; brighter light means faster. The robot charges toward the light.
 def aggression():
     while True:
-        if btn.backspace:
+        if btn.left:
             robot.stop()
             return
 
@@ -155,7 +157,7 @@ def aggression():
 # Each sensor drives the motor on its own side; brighter light means slower. The robot approaches the light and stops in front of it.
 def love():
     while True:
-        if btn.backspace:
+        if btn.left:
             robot.stop()
             return
 
@@ -173,7 +175,7 @@ def love():
 # Each sensor drives the motor on the opposite side; brighter light means slower. The robot approaches the light, then turns away and continues exploring.
 def curiosity():
     while True:
-        if btn.backspace:
+        if btn.left:
             robot.stop()
             return
 
@@ -188,8 +190,8 @@ def curiosity():
 
 
 behaviors = [
-    ("COWARD", cowardice),
-    ("AGGRO", aggression),
+    ("COWARDICE", cowardice),
+    ("AGGRESSION", aggression),
     ("LOVE", love),
     ("CURIOUS", curiosity),
 ]
@@ -216,8 +218,8 @@ def choose_behavior():
             show_text("RUNNING:", behaviors[idx][0])
             time.sleep(0.5)
             return behaviors[idx][1]
-        elif btn.backspace:
-            while btn.backspace:
+        elif btn.left:
+            while btn.left:
                 time.sleep(0.05)
             return None
         time.sleep(0.05)
@@ -239,7 +241,7 @@ def main():
 
         selected()
 
-        while btn.backspace:
+        while btn.left:
             time.sleep(0.05)
         time.sleep(0.2)
 
