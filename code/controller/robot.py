@@ -153,23 +153,23 @@ class Robot:
         return
 
     def bernoulliLemniscateAsync(self, scale, velocity=100.0):
-        dsdt = velocity
         a = scale
         u = 0.0
         last = time.monotonic()
         while u < 2 * math.pi:
-            # Get the Curvature of the curve at u, i.e. da/ds at u
-            dads = (3 * math.cos(u)) / (a * math.sqrt(1 + math.sin(u)**2))
+            # Get the Curvature of the curve at u, i.e. d(angle)/ds at u where s is the distance along the curve.
+            curvature = (3 * math.cos(u)) / (a * math.sqrt(1 + math.sin(u)**2))
 
             # Get the Anugular Velocity
-            angularVelocity = dsdt * dads
-            # radius = velocity / angularVelocity
+            angularVelocity = velocity * curvature
+            # radius = velocity / angularVelocity = 1 / dads
 
             # Set Velocity
-            velocityLeft = (velocity - angularVelocity * self.odometry.wheelBase / 2) # Simplified from arcAsync, radius not expicitly needed since radius is a function of velocity and angular velocity
+            # Simplified from arcAsync, radius not expicitly needed since radius is a function of velocity and angular velocity. Calculating radius could also lead to a divide by zero if curvature is zero.
+            velocityLeft = velocity - angularVelocity * self.odometry.wheelBase / 2
             velocityLeftRPS = velocityLeft / self.odometry.wheelCircumference
     
-            velocityRight = (velocity + angularVelocity * self.odometry.wheelBase / 2) # Simplified from arcAsync, radius not expicitly needed since radius is a function of velocity and angular velocity
+            velocityRight = velocity + angularVelocity * self.odometry.wheelBase / 2
             velocityRightRPS = velocityRight / self.odometry.wheelCircumference
     
             self.leftMotor.on(SpeedRPS(velocityLeftRPS), False, False)
