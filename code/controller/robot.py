@@ -115,6 +115,7 @@ class Robot:
 
         start = time.monotonic()
         while time.monotonic() - start < duration:
+            # Odometry
             self.odometry.heartbeat()
             time.sleep(Config.HEARTBEAT_PERIOD / 1000)
 
@@ -142,6 +143,7 @@ class Robot:
 
         start = time.monotonic()
         while time.monotonic() - start < duration:
+            # Odometry
             self.odometry.heartbeat()
             time.sleep(Config.HEARTBEAT_PERIOD / 1000)
 
@@ -151,13 +153,19 @@ class Robot:
         return
 
     def lemniscateAsync(self, scale, velocity=100.0):
-        # conversion to mm (graeme why u use meters)
         a = scale
 
         u = 0.0
-        dt = Config.HEARTBEAT_PERIOD / 1000
+        now = time.monotonic()
 
         while u < 2 * math.pi:
+            # get dt
+            dt = time.monotonic() - now
+            now = time.monotonic()
+
+            # advance at constant linear velocity
+            u += abs(velocity) / ds * dt
+
             # Gerono lemniscate:
             #   x = a sin(u)
             #   y = a sin(u) cos(u)
@@ -189,12 +197,9 @@ class Robot:
             self.leftMotor.on(SpeedRPS(leftRPS), False, False)
             self.rightMotor.on(SpeedRPS(rightRPS), False, False)
 
+            # Odometry
             self.odometry.heartbeat()
-
-            # advance at constant linear velocity
-            u += abs(velocity) / ds * dt
-
-            time.sleep(dt)
+            time.sleep(Config.HEARTBEAT_PERIOD / 1000)
 
         self.stop()
         self.odometry.heartbeat()
