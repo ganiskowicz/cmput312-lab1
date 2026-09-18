@@ -33,7 +33,7 @@ CMPUT 312 collaboration policy.
 import time
 
 from ev3dev2.display import Display
-from ev3dev2.button import Button
+from ev3dev2.button import Button as EV3Button
 from ev3dev2.sound import Sound
 
 # ==================== Constants ==================== #
@@ -47,7 +47,6 @@ class Text:
 
         return
 
-
 class Button:
     def __init__(self, text, method):
         self.text = text
@@ -55,10 +54,9 @@ class Button:
 
         return
 
-
 class Menu:
     def __init__(self, elements):
-        self.button = Button()
+        self.button = EV3Button()
         self.display = Display()
         self.sound = Sound()
 

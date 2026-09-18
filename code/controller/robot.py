@@ -27,7 +27,7 @@ using only the resources listed above in accordance with the
 CMPUT 312 collaboration policy.
 """
 
-# Written By Graeme Aniskowicz
+# Written By Matvey Okoneshnikov and Graeme Aniskowicz
 
 # ===================== Modules ===================== #
 import math
@@ -39,7 +39,6 @@ from ev3dev2.sensor.lego import ColorSensor
 from controller import config as Config
 from controller.odometry import Odometry
 from controller.util import clamp, sign
-from controller.menu import Menu, Option
 
 # ==================== Constants ==================== #
 
@@ -125,41 +124,21 @@ class Robot:
         return
 
     def pivotAsync(self, angleDeg, angularVelocityDeg=90.0):
-        angle = math.radians(angleDeg)
-        angularVelocity = abs(math.radians(angularVelocityDeg)) * sign(angularVelocityDeg)
-        duration = abs(angle / angularVelocity)
-
-        velocity = angularVelocity * (self.odometry.wheelBase / 2)
-        velocityRPS = velocity / self.odometry.wheelCircumference
-
-        self.leftMotor.on(SpeedRPS(-velocityRPS), False, False)
-        self.rightMotor.on(SpeedRPS(velocityRPS), False, False)
-
-        start = time.monotonic()
-        while time.monotonic() - start < duration:
-            self.odometry.heartbeat()
-            time.sleep(Config.HEARTBEAT_PERIOD / 1000)
-
-        self.stop()
-        self.odometry.heartbeat()
-
-        return
+        return self.arcAsync(angleDeg, angularVelocityDeg, 0.0)
 
     def arcAsync(self, angleDeg, angularVelocityDeg=90.0, radius=0.0):
         angle = math.radians(angleDeg)
         angularVelocity = math.radians(angularVelocityDeg)
-
         duration = abs(angle / angularVelocity)
 
-        # v = omega * r; each wheel has a different radius from the centre of rotation
-        leftVelocity = angularVelocity * (radius - self.odometry.wheelBase / 2)
-        rightVelocity = angularVelocity * (radius + self.odometry.wheelBase / 2)
+        velocityLeft = angularVelocity * (radius - self.odometry.wheelBase / 2)
+        velocityLeftRPS = velocityLeft / self.odometry.wheelCircumference
 
-        leftRPS = leftVelocity / self.odometry.wheelCircumference
-        rightRPS = rightVelocity / self.odometry.wheelCircumference
+        velocityRight = angularVelocity * (radius + self.odometry.wheelBase / 2)
+        velocityRightRPS = velocityRight / self.odometry.wheelCircumference
 
-        self.leftMotor.on(SpeedRPS(leftRPS), False, False)
-        self.rightMotor.on(SpeedRPS(rightRPS), False, False)
+        self.leftMotor.on(SpeedRPS(velocityLeftRPS), False, False)
+        self.rightMotor.on(SpeedRPS(velocityRightRPS), False, False)
 
         start = time.monotonic()
         while time.monotonic() - start < duration:
@@ -173,7 +152,7 @@ class Robot:
 
     def lemniscateAsync(self, scale, velocity=100.0):
         # conversion to mm (graeme why u use meters)
-        a = scale * 1000.0
+        a = scale
 
         u = 0.0
         dt = Config.HEARTBEAT_PERIOD / 1000
@@ -223,17 +202,6 @@ class Robot:
         return
 
 def main():
-    robot = Robot()
-
-    menu = Menu("Title", [
-        Option("One", robot.arcAsync),
-        Option("Two", robot.arcAsync),
-        Option("Three", robot.arcAsync),
-        Option("Four", robot.arcAsync),
-    ])
-
-    result = menu.inputAsync()
-
     # robot.moveAsync(150.0, 50.0)
     # robot.printPose()
     # robot.pivotAsync(90.0, 15.0)

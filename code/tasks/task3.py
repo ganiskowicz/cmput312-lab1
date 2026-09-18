@@ -38,6 +38,7 @@ import os
 sys.path.append(os.path.abspath('../'))
 
 from controller.robot import Robot
+from controller.odometry import Pose
 from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
@@ -51,31 +52,107 @@ CIRCLE_RADIUS = 500 # mm
 RECTANGLE_HEIGHT = 500 # mm
 RECTANGLE_WIDTH = 1000 # mm
 
-LEMNISCATE_SCALE = 0.5
+LEMNISCATE_SCALE = 500 # mm
 
 # ===================== Module ====================== #
 def straightLine():
+    Menu([
+        Text("Performing Straight Line")
+    ]).draw()
+        
     robot = Robot()
 
-    print("Driving straight line...")
-    robot.moveAsync(STRAIGHT_LINE_DISTANCE, LINEAR_VELOCITY)
+    print("Performing Straight Line")
+    print("The current pose is...")
     robot.printPose()
+
+    print("Performing Straight Line")
+    print("The current pose is...")
+    robot.printPose()
+
+    print("Driving...")
+    robot.moveAsync(STRAIGHT_LINE_DISTANCE, LINEAR_VELOCITY)
+
+    print("The new pose is...")
+    robot.printPose()
+
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(1000, 0, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+
+    Menu([
+        Text("Rotational Error"),
+        Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
+        Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
+        Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
+        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
 
     return
 
 def circle():
+    Menu([
+        Text("Performing Circle")
+    ]).draw()
+        
     robot = Robot()
 
-    print("Driving circle...")
-    robot.arcAsync(360.0, ANGULAR_VELOCITY, CIRCLE_RADIUS)
+    print("Performing Circle")
+    print("The current pose is...")
     robot.printPose()
+
+    print("Performing Circle")
+    print("The current pose is...")
+    robot.printPose()
+
+    print("Driving...")
+    robot.arcAsync(360.0, ANGULAR_VELOCITY, CIRCLE_RADIUS)
+
+    print("The new pose is...")
+    robot.printPose()
+
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(0, 0, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+
+    Menu([
+        Text("Rotational Error"),
+        Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
+        Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
+        Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
+        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
 
     return
 
 def rectangle():
+    Menu([
+        Text("Performing Rectangle")
+    ]).draw()
+        
     robot = Robot()
 
-    print("Driving rectangle...")
+    print("Performing Rectangle")
+    print("The current pose is...")
+    robot.printPose()
+
+    print("Performing Rectangle")
+    print("The current pose is...")
+    robot.printPose()
+
+    print("Driving...")
     for i in range(2):
         robot.moveAsync(RECTANGLE_HEIGHT, LINEAR_VELOCITY)
         robot.pivotAsync(90, ANGULAR_VELOCITY)
@@ -83,27 +160,83 @@ def rectangle():
         robot.moveAsync(RECTANGLE_WIDTH, LINEAR_VELOCITY)
         robot.pivotAsync(90, ANGULAR_VELOCITY)
 
+    print("The new pose is...")
     robot.printPose()
+
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(0, 0, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+
+    Menu([
+        Text("Rotational Error"),
+        Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
+        Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
+        Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
+        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
 
     return
 
 def lemniscate():
+    Menu([
+        Text("Performing Lemniscate")
+    ]).draw()
+        
     robot = Robot()
 
-    print("Driving lemniscate...")
-    robot.lemniscateAsync(LEMNISCATE_SCALE, LINEAR_VELOCITY)
+    print("Performing Lemniscate")
+    print("The current pose is...")
     robot.printPose()
+
+    print("Performing Lemniscate")
+    print("The current pose is...")
+    robot.printPose()
+
+    print("Driving...")
+    robot.lemniscateAsync(LEMNISCATE_SCALE, LINEAR_VELOCITY)
+
+    print("The new pose is...")
+    robot.printPose()
+
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(0, 0, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+
+    Menu([
+        Text("Rotational Error"),
+        Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
+        Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
+        Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
+        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
 
     return
 
 def main():
-    Menu([
-        Text("Select Shape"),
-        Button("Straight Line", straightLine),
-        Button("Circle", circle),
-        Button("Rectangle", rectangle),
-        Button("Lemniscate", lemniscate),
-    ]).inputAsync()
+    running = [True]
+    while running[0]:
+        Menu([
+            Text("Select Shape"),
+            Button("Straight Line", straightLine),
+            Button("Circle", circle),
+            Button("Rectangle", rectangle),
+            Button("Lemniscate", lemniscate),
+            Button("Quit", lambda: running.__setitem__(0, False)),
+        ]).inputAsync()
+
+    Menu("Done", []).draw()
 
     return
 

@@ -83,6 +83,10 @@ def linear():
     return
 
 def angular():
+    Menu([
+        Text("Performing Angular Error Analysis")
+    ]).draw()
+        
     robot = Robot()
 
     print("Performing Angular Error Analysis")
@@ -123,7 +127,7 @@ def main():
             Button("Quit", lambda: running.__setitem__(0, False)),
         ]).inputAsync()
 
-    Menu("Done", []).inputAsync()
+    Menu("Done", []).draw()
 
     return
 
