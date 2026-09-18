@@ -30,6 +30,7 @@ CMPUT 312 collaboration policy.
 # Written By Graeme Aniskowicz
 
 # ===================== Modules ===================== #
+import math
 import sys
 import os
 
@@ -47,7 +48,8 @@ ANGULAR_VELOCITY = 45.0 # deg/s
 # ===================== Module ====================== #
 def linear():
     Menu([
-        Text("Performing Linear Error Analysis")
+        Text("Performing Linear"),
+        Text("Error Analysis")
     ]).draw()
 
     robot = Robot()
@@ -72,7 +74,15 @@ def linear():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Straight Line Error"),
+        Text("Pose (Linear)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Linear)"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -84,7 +94,8 @@ def linear():
 
 def angular():
     Menu([
-        Text("Performing Angular Error Analysis")
+        Text("Performing Angular"),
+        Text("Error Analysis")
     ]).draw()
         
     robot = Robot()
@@ -109,7 +120,15 @@ def angular():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Rotational Error"),
+        Text("Pose (Angular)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Angular)"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -122,8 +141,8 @@ def main():
     while running[0]:
         Menu([
             Text("Select Error"),
-            Button("Straight Line", linear),
-            Button("Rotational", angular),
+            Button("Linear", linear),
+            Button("Angular", angular),
             Button("Quit", lambda: running.__setitem__(0, False)),
         ]).inputAsync()
 

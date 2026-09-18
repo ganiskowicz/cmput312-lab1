@@ -32,6 +32,7 @@ CMPUT 312 collaboration policy.
 # Written By Matvey Okoneshnikov and Graeme Aniskowicz
 
 # ===================== Modules ===================== #
+import math
 import sys
 import os
 
@@ -57,14 +58,11 @@ LEMNISCATE_SCALE = 500 # mm
 # ===================== Module ====================== #
 def straightLine():
     Menu([
-        Text("Performing Straight Line")
+        Text("Performing Straight"),
+        Text("Line")
     ]).draw()
         
     robot = Robot()
-
-    print("Performing Straight Line")
-    print("The current pose is...")
-    robot.printPose()
 
     print("Performing Straight Line")
     print("The current pose is...")
@@ -86,7 +84,15 @@ def straightLine():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Straight Line Error"),
+        Text("Pose (Line)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Line)"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -102,10 +108,6 @@ def circle():
     ]).draw()
         
     robot = Robot()
-
-    print("Performing Circle")
-    print("The current pose is...")
-    robot.printPose()
 
     print("Performing Circle")
     print("The current pose is...")
@@ -127,7 +129,15 @@ def circle():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Circle Error"),
+        Text("Pose (Circle)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Circle)"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -143,10 +153,6 @@ def rectangle():
     ]).draw()
         
     robot = Robot()
-
-    print("Performing Rectangle")
-    print("The current pose is...")
-    robot.printPose()
 
     print("Performing Rectangle")
     print("The current pose is...")
@@ -173,7 +179,15 @@ def rectangle():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Rectangle Error"),
+        Text("Pose (Rectangle)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Rectangle)"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -189,10 +203,6 @@ def lemniscate():
     ]).draw()
         
     robot = Robot()
-
-    print("Performing Lemniscate")
-    print("The current pose is...")
-    robot.printPose()
 
     print("Performing Lemniscate")
     print("The current pose is...")
@@ -214,7 +224,15 @@ def lemniscate():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Lemniscate Error"),
+        Text("Pose (Lemniscate)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Lemniscate)"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),

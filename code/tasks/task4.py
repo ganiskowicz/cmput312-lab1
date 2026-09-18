@@ -30,6 +30,7 @@ CMPUT 312 collaboration policy.
 # Written By Matvey Okoneshnikov and Graeme Aniskowicz
 
 # ===================== Modules ===================== #
+import math
 import sys
 import os
 
@@ -47,17 +48,51 @@ COMMANDS = [
 
 # ===================== Module ====================== #
 def deadReckoning():
-    print("Fix me: Finish Implementation")
-
+    Menu([
+        Text("Performing Dead Reckoning")
+    ]).draw()
+        
     robot = Robot()
+
+    print("Performing Dead Reckoning")
+    print("The current pose is...")
+    robot.printPose()
 
     print("Driving...")
     robot.executeCommandsAsync(COMMANDS)
 
+    print("The new pose is...")
+    robot.printPose()
+
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(1000, 0, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+
+    Menu([
+        Text("Pose (Estimate)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
     return
 
 def main():
-    deadReckoning()
+    running = [True]
+    while running[0]:
+        Menu([
+            Text("Select Program"),
+            Button("Dead Reckoning", deadReckoning),
+            Button("Quit", lambda: running.__setitem__(0, False)),
+        ]).inputAsync()
+
+    Menu("Done", []).draw()
 
     return
 
