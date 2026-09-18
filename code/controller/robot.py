@@ -152,12 +152,52 @@ class Robot:
 
         return
 
-    def lemniscateAsync(self, scale, velocity=100.0):
+    def bernoulliLemniscateAsync(self, scale, velocity=100.0):
+        dsdt = velocity
         a = scale
-
-        last = time.monotonic()
         u = 0.0
+        last = time.monotonic()
+        while u < 2 * math.pi:
+            # Get the Curvature of the curve at u, i.e. da/ds at u
+            dads = (3 * math.cos(u)) / (a * math.sqrt(1 + math.sin(u)**2))
 
+            # Get the Anugular Velocity
+            angularVelocity = dsdt * dads
+            # radius = velocity / angularVelocity
+
+            # Set Velocity
+            velocityLeft = (velocity - angularVelocity * self.odometry.wheelBase / 2) # Simplified from arcAsync, radius not expicitly needed since radius is a function of velocity and angular velocity
+            velocityLeftRPS = velocityLeft / self.odometry.wheelCircumference
+    
+            velocityRight = (velocity + angularVelocity * self.odometry.wheelBase / 2) # Simplified from arcAsync, radius not expicitly needed since radius is a function of velocity and angular velocity
+            velocityRightRPS = velocityRight / self.odometry.wheelCircumference
+    
+            self.leftMotor.on(SpeedRPS(velocityLeftRPS), False, False)
+            self.rightMotor.on(SpeedRPS(velocityRightRPS), False, False)
+
+            # Wait
+            time.sleep(Config.HEARTBEAT_PERIOD / 1000)
+
+            # Get dt from elapsed
+            current = time.monotonic()
+            dt = current - last
+            last = current
+
+            # Get du to increment u at a constant linear velocity v
+            du = (velocity / scale) * math.sqrt(1 + math.sin(u)**2) * dt
+            u += du
+
+            self.odometry.heartbeat()
+
+        self.stop()
+        self.odometry.heartbeat()
+
+        return
+
+    def geronoLemniscateAsync(self, scale, velocity=100.0):
+        a = scale
+        u = 0.0
+        last = time.monotonic()
         while u < 2 * math.pi:
             # Gerono lemniscate:
             #   x = a sin(u)
@@ -207,6 +247,9 @@ class Robot:
         self.odometry.heartbeat()
 
         return
+
+    def lemniscateAsync(self, scale, velocity=100.0):
+        return self.bernoulliLemniscateAsync(scale, velocity)
 
 def main():
     # robot.moveAsync(150.0, 50.0)
