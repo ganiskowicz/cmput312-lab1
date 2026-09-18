@@ -48,8 +48,8 @@ class Robot:
         self.leftMotor = LargeMotor(Config.LEFT_MOTOR_PORT)
         self.rightMotor = LargeMotor(Config.RIGHT_MOTOR_PORT)
 
-        self.sensorLeft = ColorSensor(Config.LEFT_SENSOR_PORT)
-        self.sensorRight = ColorSensor(Config.RIGHT_SENSOR_PORT)
+        # self.sensorLeft = ColorSensor(Config.LEFT_SENSOR_PORT)
+        # self.sensorRight = ColorSensor(Config.RIGHT_SENSOR_PORT)
 
         self.odometry = Odometry(
             self.leftMotor,
@@ -155,17 +155,10 @@ class Robot:
     def lemniscateAsync(self, scale, velocity=100.0):
         a = scale
 
+        last = time.monotonic()
         u = 0.0
-        now = time.monotonic()
 
         while u < 2 * math.pi:
-            # get dt
-            dt = time.monotonic() - now
-            now = time.monotonic()
-
-            # advance at constant linear velocity
-            u += abs(velocity) / ds * dt
-
             # Gerono lemniscate:
             #   x = a sin(u)
             #   y = a sin(u) cos(u)
@@ -197,9 +190,18 @@ class Robot:
             self.leftMotor.on(SpeedRPS(leftRPS), False, False)
             self.rightMotor.on(SpeedRPS(rightRPS), False, False)
 
-            # Odometry
-            self.odometry.heartbeat()
+            # wait
             time.sleep(Config.HEARTBEAT_PERIOD / 1000)
+
+            # get dt
+            current = time.monotonic()
+            dt = current - last
+            last = current
+
+            # advance at constant linear velocity
+            u += abs(velocity) / ds * dt
+
+            self.odometry.heartbeat()
 
         self.stop()
         self.odometry.heartbeat()

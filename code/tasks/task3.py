@@ -42,7 +42,7 @@ from controller.odometry import Pose
 from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
-LINEAR_VELOCITY = 50.0 # mm per s
+LINEAR_VELOCITY = 150.0 # mm per s
 ANGULAR_VELOCITY = 45.0 # deg per s
 
 STRAIGHT_LINE_DISTANCE = 1000 # mm
@@ -86,7 +86,7 @@ def straightLine():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Rotational Error"),
+        Text("Straight Line Error"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -112,7 +112,7 @@ def circle():
     robot.printPose()
 
     print("Driving...")
-    robot.arcAsync(360.0, ANGULAR_VELOCITY, CIRCLE_RADIUS)
+    robot.arcAsync(360.0, -ANGULAR_VELOCITY / 5, -CIRCLE_RADIUS)
 
     print("The new pose is...")
     robot.printPose()
@@ -127,7 +127,7 @@ def circle():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Rotational Error"),
+        Text("Circle Error"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -173,7 +173,7 @@ def rectangle():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Rotational Error"),
+        Text("Rectangle Error"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
@@ -214,7 +214,7 @@ def lemniscate():
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
 
     Menu([
-        Text("Rotational Error"),
+        Text("Lemniscate Error"),
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
