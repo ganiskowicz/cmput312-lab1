@@ -153,6 +153,7 @@ class Robot:
         return
 
     def bernoulliLemniscateAsync(self, scale, velocity=100.0):
+        # offset by math.pi / 2 to start in centre
         a = scale
         u = 0.0
         last = time.monotonic()
@@ -247,9 +248,6 @@ class Robot:
         self.odometry.heartbeat()
 
         return
-
-    def lemniscateAsync(self, scale, velocity=100.0):
-        return self.bernoulliLemniscateAsync(scale, velocity)
 
 def main():
     # robot.moveAsync(150.0, 50.0)

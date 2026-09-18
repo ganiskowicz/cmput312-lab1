@@ -197,7 +197,7 @@ def rectangle():
 
     return
 
-def lemniscate():
+def geronoLemniscateAsync():
     Menu([
         Text("Performing Lemniscate")
     ]).draw()
@@ -209,7 +209,50 @@ def lemniscate():
     robot.printPose()
 
     print("Driving...")
-    robot.lemniscateAsync(LEMNISCATE_SCALE, LINEAR_VELOCITY)
+    robot.geronoLemniscateAsync(LEMNISCATE_SCALE, LINEAR_VELOCITY)
+
+    print("The new pose is...")
+    robot.printPose()
+
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(0, 0, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+
+    Menu([
+        Text("Pose (Lemniscate)"),
+        Text("x: {:9.3f} mm".format(actualPose.x)),
+        Text("y: {:9.3f} mm".format(actualPose.y)),
+        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+    Menu([
+        Text("Error (Lemniscate)"),
+        Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
+        Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
+        Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
+        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Button("Ok", lambda: None),
+    ]).inputAsync()
+
+def bernoulliLemniscateAsync():
+    Menu([
+        Text("Performing Lemniscate")
+    ]).draw()
+        
+    robot = Robot()
+
+    print("Performing Lemniscate")
+    print("The current pose is...")
+    robot.printPose()
+
+    print("Driving...")
+    robot.bernoulliLemniscateAsync(LEMNISCATE_SCALE, LINEAR_VELOCITY)
 
     print("The new pose is...")
     robot.printPose()
@@ -250,7 +293,8 @@ def main():
             Button("Straight Line", straightLine),
             Button("Circle", circle),
             Button("Rectangle", rectangle),
-            Button("Lemniscate", lemniscate),
+            Button("Lemniscate (Bernoulli)", bernoulliLemniscateAsync),
+            Button("Lemniscate (Gerono)", geronoLemniscateAsync),
             Button("Quit", lambda: running.__setitem__(0, False)),
         ]).inputAsync()
 
