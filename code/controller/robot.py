@@ -51,8 +51,8 @@ class Robot:
         self.leftMotor = LargeMotor(Config.LEFT_MOTOR_PORT)
         self.rightMotor = LargeMotor(Config.RIGHT_MOTOR_PORT)
 
-        # self.sensorLeft = ColorSensor(Config.LEFT_SENSOR_PORT)
-        # self.sensorRight = ColorSensor(Config.RIGHT_SENSOR_PORT)
+        self.sensorLeft = ColorSensor(Config.LEFT_SENSOR_PORT)
+        self.sensorRight = ColorSensor(Config.RIGHT_SENSOR_PORT)
 
         self.odometry = Odometry(
             self.leftMotor,
@@ -281,7 +281,7 @@ def main():
     print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
     print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
     print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
-    
+
     return
 
 if __name__ == "__main__":
