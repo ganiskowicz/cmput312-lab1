@@ -32,12 +32,15 @@ CMPUT 312 collaboration policy.
 # ===================== Modules ===================== #
 import math
 import time
+import sys
+import os
 
 from ev3dev2.motor import LargeMotor, SpeedPercent, SpeedRPS
 from ev3dev2.sensor.lego import ColorSensor
 
-from controller import config as Config
-from controller.odometry import Odometry
+sys.path.append(os.path.abspath('../'))
+import controller.config as Config
+from controller.odometry import Odometry, Pose
 from controller.util import clamp, sign
 
 # ==================== Constants ==================== #
@@ -250,28 +253,35 @@ class Robot:
         return
 
 def main():
-    # robot.moveAsync(150.0, 50.0)
-    # robot.printPose()
-    # robot.pivotAsync(90.0, 15.0)
-    # robot.printPose()
+    robot = Robot()
 
-    # time.sleep(3)
+    print("Performing General Error Test")
+    print("The current pose is...")
+    robot.printPose()
 
-    # robot.moveAsync(150.0, -50.0)
-    # robot.printPose()
-    # robot.pivotAsync(90.0, -15.0)
-    # robot.printPose()
+    print("Driving...")
+    robot.moveAsync(150.0, 50.0)
+    robot.printPose()
+    robot.pivotAsync(90.0, 15.0)
+    robot.printPose()
+    time.sleep(3)
+    robot.moveAsync(150.0, -50.0)
+    robot.printPose()
+    robot.pivotAsync(90.0, -15.0)
+    robot.printPose()
 
-    # robot.moveAsync(150.0, 50.0)
-    # robot.pivotAsync(90.0, 15.0)
-    # robot.printPose()
-    # robot.moveAsync(150.0, 50.0)
-    # robot.pivotAsync(90.0, 15.0)
-    # robot.printPose()
-    # robot.moveAsync(150.0, 50.0)
-    # robot.pivotAsync(90.0, 15.0)
-    # robot.printPose()
+    print("The new pose is...")
+    robot.printPose()
 
+    print("The error is ...")
+    expectedPose = Pose.fromXYA(150, -150, 0)
+    actualPose = robot.getPose()
+
+    print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
+    print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
+    print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
+    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+    
     return
 
 if __name__ == "__main__":

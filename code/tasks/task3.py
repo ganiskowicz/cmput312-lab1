@@ -43,8 +43,8 @@ from controller.odometry import Pose
 from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
-LINEAR_VELOCITY = 150.0 # mm per s
-ANGULAR_VELOCITY = 45.0 # deg per s
+LINEAR_VELOCITY = 150.0 # mm/s
+ANGULAR_VELOCITY = 45.0 # deg/s
 
 STRAIGHT_LINE_DISTANCE = 1000 # mm
 
