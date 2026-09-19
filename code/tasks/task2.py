@@ -40,7 +40,7 @@ from controller.odometry import Pose
 from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
-LINEAR_DISTANCE = 250.0 # mm
+LINEAR_DISTANCE = 500.0 # mm
 LINEAR_VELOCITY = 60.0 # mm/s
 ANGULAR_OFFSET = 360.0 # deg
 ANGULAR_VELOCITY = 45.0 # deg/s
@@ -48,8 +48,9 @@ ANGULAR_VELOCITY = 45.0 # deg/s
 # ===================== Module ====================== #
 velocityMultiplier = 1
 
-def setVelocityMultiplier(mltiplier):
-    velocityMultiplier = mltiplier
+def setVelocityMultiplier(multiplier):
+    global velocityMultiplier
+    velocityMultiplier = multiplier
 
 def linear():
     Menu([
