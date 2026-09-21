@@ -72,7 +72,8 @@ class Pose:
         return self.y - expected.y
 
     def getAngleError(self, expected):
-        return math.atan2(math.sin(self.angle - expected.angle), math.cos(self.angle - expected.angle))
+        return self.angle - expected.angle
+        # return math.atan2(math.sin(self.angle - expected.angle), math.cos(self.angle - expected.angle))
 
 class Odometry:
     def __init__(self, leftMotor, rightMotor, wheelDiameter, wheelBase):

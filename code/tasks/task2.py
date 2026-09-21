@@ -40,12 +40,18 @@ from controller.odometry import Pose
 from controller.menu import Menu, Text, Button
 
 # ==================== Constants ==================== #
-LINEAR_DISTANCE = 250.0 # mm
-LINEAR_VELOCITY = 50.0 # mm/s
+LINEAR_DISTANCE = 500.0 # mm
+LINEAR_VELOCITY = 270.0 # mm/s
 ANGULAR_OFFSET = 360.0 # deg
-ANGULAR_VELOCITY = 45.0 # deg/s
+ANGULAR_VELOCITY = 180.0 # deg/s
 
 # ===================== Module ====================== #
+velocityMultiplier = 1
+
+def setVelocityMultiplier(multiplier):
+    global velocityMultiplier
+    velocityMultiplier = multiplier
+
 def linear():
     Menu([
         Text("Performing Linear"),
@@ -59,7 +65,7 @@ def linear():
     robot.printPose()
 
     print("Driving...")
-    robot.moveAsync(LINEAR_DISTANCE, LINEAR_VELOCITY)
+    robot.moveAsync(LINEAR_DISTANCE, LINEAR_VELOCITY * velocityMultiplier)
 
     print("The new pose is...")
     robot.printPose()
@@ -105,7 +111,7 @@ def angular():
     robot.printPose()
 
     print("Driving...")
-    robot.pivotAsync(ANGULAR_OFFSET, ANGULAR_VELOCITY)
+    robot.pivotAsync(ANGULAR_OFFSET, ANGULAR_VELOCITY * velocityMultiplier)
 
     print("The new pose is...")
     robot.printPose()
@@ -140,11 +146,21 @@ def main():
     running = [True]
     while running[0]:
         Menu([
+            Text("Select Speed"),
+            Button("33%", lambda: setVelocityMultiplier(1/3)),
+            Button("66%", lambda: setVelocityMultiplier(2/3)),
+            Button("100%", lambda: setVelocityMultiplier(1)),
+            Button("Quit", lambda: running.__setitem__(0, False)),
+        ]).inputAsync()
+        if (not running[0]): break
+
+        Menu([
             Text("Select Error"),
             Button("Linear", linear),
             Button("Angular", angular),
             Button("Quit", lambda: running.__setitem__(0, False)),
         ]).inputAsync()
+        if (not running[0]): break
 
     Menu("Done", []).draw()
 

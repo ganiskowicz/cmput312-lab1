@@ -119,7 +119,7 @@ class Menu:
                 self.sound.beep("-f 200")
                 time.sleep(0.2)
 
-            elif self.button.enter:
+            elif self.button.right:
                 return self.selectCurrent()
 
             elif self.button.backspace:
