@@ -127,12 +127,12 @@ class Robot:
 
         return
 
-    def pivotAsync(self, angleDeg, angularVelocityDeg=90.0):
-        return self.arcAsync(angleDeg, angularVelocityDeg, 0.0)
+    def pivotAsync(self, angleDegrees, angularVelocityDegrees=90.0):
+        return self.arcAsync(angleDegrees, angularVelocityDegrees, 0.0)
 
-    def arcAsync(self, angleDeg, angularVelocityDeg=90.0, radius=0.0):
-        angle = math.radians(angleDeg)
-        angularVelocity = math.radians(angularVelocityDeg)
+    def arcAsync(self, angleDegrees, angularVelocityDegrees=90.0, radius=0.0):
+        angle = math.radians(angleDegrees)
+        angularVelocity = math.radians(angularVelocityDegrees)
         duration = abs(angle / angularVelocity)
 
         velocityLeft = angularVelocity * (radius - self.odometry.wheelBase / 2)
