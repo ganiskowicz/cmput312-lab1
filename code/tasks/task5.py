@@ -13,17 +13,24 @@ Problem Number: 5
  
 Brief Program/Problem Description: 
 
-	Convert the differential drive vehicle into a Braitenberg vehicle with
-	calibration and a behavior-selection menu.
+	Convert the differential drive vehicle into a Braitenberg vehicle with 
+	light sensor calibration and a behavior-selection menu.
 
 Brief Solution Summary:
 
 	Use ambient-light measurements from the left and right sensors to map the
 	light intensity into motor speeds. Each behavior selects a different
-	combination of direct/crossed and direct/inverted drive logic.
+	combination of direct/crossed and direct/inverted drive logic. 
+    
+    # Not yet implemented: Behavior selection uses the shared Menu/Option class.
+    Behavior selection uses the shared Menu/Option class.
 
 Used Resources/Collaborators:
-	... 
+    Menu/Option/Robot/Config class written by Graeme Aniskowicz.
+    EV3 Robot Setup Guide
+    ev3dev-lang-python github repository
+    python ev3 development documentation for ev3dev2 library(senors, motors, buttons, display)
+    AI Assistant (ChatGPT) for code review, library functions and debugging assistance.
 
 I/we hereby certify that I/we have produced the following solution 
 using only the resources listed above in accordance with the 
