@@ -51,8 +51,7 @@ class Pose:
         return
 
     def __str__(self):
-        angleDegrees = 180 - (180 - math.degrees(self.angle)) % 360
-        return "x = {:9.3f} mm, y = {:9.3f} mm, angle = {:7.2f} deg".format(self.x, self.y, angleDegrees)
+        return "x = {:9.3f} mm, y = {:9.3f} mm, angle = {:7.2f} deg".format(self.x, self.y, math.degrees(self.getWrappedAngle()))
 
     def fromPose(pose):
         copy = Pose(pose.leftTicks, pose.rightTicks, pose.time, pose.x, pose.y, pose.angle)
@@ -73,7 +72,10 @@ class Pose:
 
     def getAngleError(self, expected):
         return self.angle - expected.angle
-        # return math.atan2(math.sin(self.angle - expected.angle), math.cos(self.angle - expected.angle))
+
+    def getWrappedAngle(self):
+        wrapped = math.pi - (math.pi - math.degrees(self.angle)) % (math.pi * 2)
+        return wrapped
 
 class Odometry:
     def __init__(self, leftMotor, rightMotor, wheelDiameter, wheelBase):

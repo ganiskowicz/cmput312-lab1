@@ -77,13 +77,13 @@ def linear():
     print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
     print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
     print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
-    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+    print("ang: {:7.3f} deg".format(math.degrees(actualPose.getAngleError(expectedPose))))
 
     Menu([
         Text("Pose (Linear)"),
         Text("x: {:9.3f} mm".format(actualPose.x)),
         Text("y: {:9.3f} mm".format(actualPose.y)),
-        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Text("ang: {:7.3f} deg".format(math.degrees(actualPose.getWrappedAngle()))),
         Button("Ok", lambda: None),
     ]).inputAsync()
 
@@ -92,7 +92,7 @@ def linear():
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
-        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Text("ang: {:7.3f} deg".format(math.degrees(actualPose.getAngleError(expectedPose)))),
         Button("Ok", lambda: None),
     ]).inputAsync()
 
@@ -123,13 +123,13 @@ def angular():
     print("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose)))
     print("x: {:9.3f} mm".format(actualPose.getXError(expectedPose)))
     print("y: {:9.3f} mm".format(actualPose.getYError(expectedPose)))
-    print("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180))
+    print("ang: {:7.3f} deg".format(math.degrees(actualPose.getAngleError(expectedPose))))
 
     Menu([
         Text("Pose (Angular)"),
         Text("x: {:9.3f} mm".format(actualPose.x)),
         Text("y: {:9.3f} mm".format(actualPose.y)),
-        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Text("ang: {:7.3f} deg".format(math.degrees(actualPose.getWrappedAngle()))),
         Button("Ok", lambda: None),
     ]).inputAsync()
 
@@ -138,7 +138,7 @@ def angular():
         Text("mag: {:7.3f} mm".format(actualPose.getTranslationError(expectedPose))),
         Text("x: {:9.3f} mm".format(actualPose.getXError(expectedPose))),
         Text("y: {:9.3f} mm".format(actualPose.getYError(expectedPose))),
-        Text("ang: {:7.3f} deg".format(actualPose.getAngleError(expectedPose) * 180)),
+        Text("ang: {:7.3f} deg".format(math.degrees(actualPose.getAngleError(expectedPose)))),
         Button("Ok", lambda: None),
     ]).inputAsync()
 

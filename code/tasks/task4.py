@@ -77,7 +77,7 @@ def deadReckoning():
         Text("Pose (Estimate)"),
         Text("x: {:9.3f} mm".format(actualPose.x)),
         Text("y: {:9.3f} mm".format(actualPose.y)),
-        Text("ang: {:7.3f} deg".format(180 - (180 - math.degrees(actualPose.angle)) % 360)),
+        Text("ang: {:7.3f} deg".format(math.degrees(actualPose.getWrappedAngle()))),
         Button("Ok", lambda: None),
     ]).inputAsync()
 
