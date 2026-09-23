@@ -5,7 +5,7 @@ Group Members: Matvey Okoneshnikov (okoneshn), Graeme Aniskowicz (ganiskow), Dom
 
 Date: September 14th 2026
  
-Brick Number: ...
+Brick Number: 1
 
 Lab Number: 1
 
@@ -22,11 +22,9 @@ Brief Solution Summary:
 	light intensity into motor speeds. Each behavior selects a different
 	combination of direct/crossed and direct/inverted drive logic. 
     
-    # Not yet implemented: Behavior selection uses the shared Menu/Option class.
-    Behavior selection uses the shared Menu/Option class.
-
 Used Resources/Collaborators:
-    Menu/Option/Robot/Config class written by Graeme Aniskowicz.
+    Robot/Config class written by Graeme Aniskowicz.
+    CMPUT 312 Lab 1 materials.
     EV3 Robot Setup Guide
     ev3dev-lang-python github repository
     python ev3 development documentation for ev3dev2 library(senors, motors, buttons, display)
