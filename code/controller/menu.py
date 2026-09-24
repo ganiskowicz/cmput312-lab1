@@ -13,11 +13,17 @@ Problem Number: n/a
  
 Brief Program/Problem Description: 
 
-	...
+	A menu system for the EV3 brick display. The menu displays both static text 
+    and selectable buttons, and allows the user to navigate between buttons using 
+    the EV3 controls, and execute afunction when a menu option is selected.
 
 Brief Solution Summary:
 
-	Algorithmic idea, underlying theory, etc...
+	The program defines Text and Button classes to represent menu elements,
+    and a Menu class to manage display, navigation, and selection. Button input 
+    is polled in a loop, with up/down cycling through available options, 
+    right selecting the current option, and backspace exiting the menu. 
+    Each Button stores a callable method which is executed when that option is selected.
 
 Used Resources/Collaborators:
 	...

@@ -13,11 +13,27 @@ Problem Number: n/a
  
 Brief Program/Problem Description: 
 
-	...
+    This is a reusable differential-drive Robot class for the EV3 platform.
+    The class provides low-level motor and sensor access, straight-line
+    motion, pivoting, circular arc motion, timed motor commands, encoder-based 
+    odometry updates, and trajectory calculation for lemniscates.
 
 Brief Solution Summary:
 
-	Algorithmic idea, underlying theory, etc...
+	The class wraps the left and right EV3 Large Motors, two Color
+    Sensors, and an Odometry object into an interface. Straight-line
+    motion is done by converting a linear velocity into wheel rotations per 
+    second using the wheel circumference. Pivot and arc motion are completed
+    using differential-drive kinematics to calculate the required left and right wheel 
+    velocities from the desired angular velocity, radius, and wheel base.
+
+    The odometry heartbeat is updated at a fixed interval so that the robot's pose 
+    can be estimated continuously from the wheel encoders. The class also implements 
+    Bernoulli and Gerono lemniscate (we switched to Bernoulli because it looked nicer :)
+    trajectories by calculating the local curvature of the desired path,
+    converting curvature and linear velocity into left and right wheel
+    velocities, and advancing the path parameter according to the elapsed
+    time so that approximately constant linear velocity is maintained.
 
 Used Resources/Collaborators:
 	...
