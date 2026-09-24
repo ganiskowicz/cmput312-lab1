@@ -27,7 +27,7 @@ using only the resources listed above in accordance with the
 CMPUT 312 collaboration policy.
 """
 
-# Written By Graeme Aniskowicz
+# Written By Matvey Okoneshnikov and Graeme Aniskowicz
 
 # ===================== Modules ===================== #
 import math

@@ -12,13 +12,11 @@ Lab Number: 1
 Problem Number: n/a
  
 Brief Program/Problem Description: 
-
 	A menu system for the EV3 brick display. The menu displays both static text 
     and selectable buttons, and allows the user to navigate between buttons using 
     the EV3 controls, and execute afunction when a menu option is selected.
 
 Brief Solution Summary:
-
 	The program defines Text and Button classes to represent menu elements,
     and a Menu class to manage display, navigation, and selection. Button input 
     is polled in a loop, with up/down cycling through available options, 
@@ -26,7 +24,9 @@ Brief Solution Summary:
     Each Button stores a callable method which is executed when that option is selected.
 
 Used Resources/Collaborators:
-	...
+	https://ev3dev-lang.readthedocs.io/projects/python-ev3dev/en/stable/display.html
+    https://ev3dev-lang.readthedocs.io/projects/python-ev3dev/en/stable/button.html
+    https://ev3dev-lang.readthedocs.io/projects/python-ev3dev/en/stable/sound.html?highlight=sound
 
 I/we hereby certify that I/we have produced the following solution 
 using only the resources listed above in accordance with the 

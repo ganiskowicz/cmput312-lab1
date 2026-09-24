@@ -12,15 +12,14 @@ Lab Number: 1
 Problem Number: n/a
  
 Brief Program/Problem Description: 
-
-	...
+	Basic configuration module for setting important constants, such as input/ouput ports,
+    wheel diamater, axle length, and heartbeat period/integration step.
 
 Brief Solution Summary:
-
-	Algorithmic idea, underlying theory, etc...
+	n/a
 
 Used Resources/Collaborators:
-	...
+	n/a
 
 I/we hereby certify that I/we have produced the following solution 
 using only the resources listed above in accordance with the 

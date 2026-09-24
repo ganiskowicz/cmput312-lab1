@@ -12,14 +12,12 @@ Lab Number: 1
 Problem Number: n/a
  
 Brief Program/Problem Description: 
-
     This is a reusable differential-drive Robot class for the EV3 platform.
     The class provides low-level motor and sensor access, straight-line
     motion, pivoting, circular arc motion, timed motor commands, encoder-based 
     odometry updates, and trajectory calculation for lemniscates.
 
 Brief Solution Summary:
-
 	The class wraps the left and right EV3 Large Motors, two Color
     Sensors, and an Odometry object into an interface. Straight-line
     motion is done by converting a linear velocity into wheel rotations per 
@@ -36,7 +34,12 @@ Brief Solution Summary:
     time so that approximately constant linear velocity is maintained.
 
 Used Resources/Collaborators:
-	...
+    CMPUT 312 Slide Materials
+    https://ev3dev-lang.readthedocs.io/projects/python-ev3dev/en/stable/motors.html?highlight=speedrps#ev3dev2.motor.SpeedRPS
+    https://en.wikipedia.org/wiki/Lemniscate_of_Bernoulli 
+    https://en.wikipedia.org/wiki/Lemniscate_of_Gerono
+    https://en.wikipedia.org/wiki/Curvature 
+	https://en.wikipedia.org/wiki/Finite_difference
 
 I/we hereby certify that I/we have produced the following solution 
 using only the resources listed above in accordance with the 

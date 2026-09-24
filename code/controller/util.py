@@ -12,15 +12,13 @@ Lab Number: 1
 Problem Number: n/a
  
 Brief Program/Problem Description: 
-
-	...
+	Small module for some convenience functions. Sign and clamp.
 
 Brief Solution Summary:
-
-	Algorithmic idea, underlying theory, etc...
+	n/a
 
 Used Resources/Collaborators:
-	...
+	n/a
 
 I/we hereby certify that I/we have produced the following solution 
 using only the resources listed above in accordance with the 

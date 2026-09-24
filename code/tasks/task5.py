@@ -12,12 +12,10 @@ Lab Number: 1
 Problem Number: 5
  
 Brief Program/Problem Description: 
-
 	Convert the differential drive vehicle into a Braitenberg vehicle with 
 	light sensor calibration and a behavior-selection menu.
 
 Brief Solution Summary:
-
 	Use ambient-light measurements from the left and right sensors to map the
 	light intensity into motor speeds. Each behavior selects a different
 	combination of direct/crossed and direct/inverted drive logic. 
