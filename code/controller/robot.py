@@ -58,7 +58,7 @@ class Robot:
             self.leftMotor,
             self.rightMotor,
             Config.WHEEL_DIAMETER,
-            Config.WHEEL_BASE
+            Config.AXLE_LENGTH
         )
 
         return
@@ -135,10 +135,10 @@ class Robot:
         angularVelocity = math.radians(angularVelocityDegrees)
         duration = abs(angle / angularVelocity)
 
-        velocityLeft = angularVelocity * (radius - self.odometry.wheelBase / 2)
+        velocityLeft = angularVelocity * (radius - self.odometry.axleLength / 2)
         velocityLeftRPS = velocityLeft / self.odometry.wheelCircumference
 
-        velocityRight = angularVelocity * (radius + self.odometry.wheelBase / 2)
+        velocityRight = angularVelocity * (radius + self.odometry.axleLength / 2)
         velocityRightRPS = velocityRight / self.odometry.wheelCircumference
 
         self.leftMotor.on(SpeedRPS(velocityLeftRPS), False, False)
@@ -170,10 +170,10 @@ class Robot:
 
             # Set Velocity
             # Simplified from arcAsync, radius not expicitly needed since radius is a function of velocity and angular velocity. Calculating radius could also lead to a divide by zero if curvature is zero.
-            velocityLeft = velocity - angularVelocity * self.odometry.wheelBase / 2
+            velocityLeft = velocity - angularVelocity * self.odometry.axleLength / 2
             velocityLeftRPS = velocityLeft / self.odometry.wheelCircumference
     
-            velocityRight = velocity + angularVelocity * self.odometry.wheelBase / 2
+            velocityRight = velocity + angularVelocity * self.odometry.axleLength / 2
             velocityRightRPS = velocityRight / self.odometry.wheelCircumference
     
             self.leftMotor.on(SpeedRPS(velocityLeftRPS), False, False)
@@ -221,11 +221,11 @@ class Robot:
             ) / (ds ** 3)
 
             leftVelocity = velocity * (
-                1 - curvature * self.odometry.wheelBase / 2
+                1 - curvature * self.odometry.axleLength / 2
             )
 
             rightVelocity = velocity * (
-                1 + curvature * self.odometry.wheelBase / 2
+                1 + curvature * self.odometry.axleLength / 2
             )
 
             leftRPS = leftVelocity / self.odometry.wheelCircumference

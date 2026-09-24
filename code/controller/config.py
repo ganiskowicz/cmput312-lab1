@@ -38,7 +38,7 @@ from ev3dev2.sensor import INPUT_4, INPUT_1
 # ==================== Constants ==================== #
 
 # ---------- Robot ---------- #
-WHEEL_BASE = 165.0 # mm
+AXLE_LENGTH = 165.0 # mm
 WHEEL_DIAMETER = 56.0 # mm
 WHEEL_CIRCUMFRENCE = math.pi * WHEEL_DIAMETER # mm
 
@@ -49,7 +49,7 @@ LEFT_SENSOR_PORT = INPUT_4
 RIGHT_SENSOR_PORT = INPUT_1
 
 # -------- Alt Robot -------- #
-# WHEEL_BASE = 150.0 # mm
+# AXLE_LENGTH = 150.0 # mm
 # WHEEL_DIAMETER = 43.2 # mm
 # WHEEL_CIRCUMFRENCE = math.pi * WHEEL_DIAMETER # mm
 
