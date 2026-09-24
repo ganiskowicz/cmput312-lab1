@@ -12,15 +12,31 @@ Lab Number: 1
 Problem Number: n/a
  
 Brief Program/Problem Description: 
+    This is the base Odometry class used for tracking the robots pose as a function 
+    of ticks on the left and right wheel encoders. When a new Odometry class through Robot, 
+    the pose defaults to x = 0, y = 0, theta = 0. Pose is another class which tracks not just
+    position data, but time data and ticks. Calling the heartbeat function will update the pose
+    using the information available. It is to be called at the rate of the heartbeat period.
 
-	...
+    The pose class provides some useful methods for digesting the info.
 
 Brief Solution Summary:
+    Pose stores time so the Odometry class is able to calculate the delta time between the last 
+    calculated pose and the new pose that is currently being calculated. This gives us dt. The
+    Pose also stores left and right encoder ticks. This means the Odometry class can calculate 
+    the delta in encoder ticks for each side. These quantities together are enough to approximate
+    the wheel velocities using a finite difference calculation (the backward difference in particular).
+    calling the hearbeat function as a high rate (such as 120Hz) ensures that the backward difference
+    approximation of the wheel velocity is acurate.
 
-	Algorithmic idea, underlying theory, etc...
+    Using the approximated velocity, we integrate wrt time to get the updated pose.
+
+    Coordinate frame, sign convension, reference point, units, other quantities and full
+    derivations are defined in the lab report. 
 
 Used Resources/Collaborators:
-	...
+    CMPUT 312 Slide materials
+	https://en.wikipedia.org/wiki/Finite_difference
 
 I/we hereby certify that I/we have produced the following solution 
 using only the resources listed above in accordance with the 
