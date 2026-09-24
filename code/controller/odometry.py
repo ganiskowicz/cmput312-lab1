@@ -78,12 +78,12 @@ class Pose:
         return wrapped
 
 class Odometry:
-    def __init__(self, leftMotor, rightMotor, wheelDiameter, wheelBase):
+    def __init__(self, leftMotor, rightMotor, wheelDiameter, axleLength):
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
 
         self.wheelDiameter = wheelDiameter
-        self.wheelBase = wheelBase
+        self.axleLength = axleLength
 
         self.wheelRadius = wheelDiameter / 2.0
         self.wheelCircumference = wheelDiameter * math.pi
@@ -114,7 +114,7 @@ class Odometry:
         rightVelocity = rightDelta / dt # mm/s
 
         linearVelocity = (leftVelocity + rightVelocity) / 2 # mm/s
-        angularVelocity = (rightVelocity - leftVelocity) / self.wheelBase # rad/s
+        angularVelocity = (rightVelocity - leftVelocity) / self.axleLength # rad/s
 
         angleDelta = angularVelocity * dt
         newAngle = oldPose.angle + angleDelta
