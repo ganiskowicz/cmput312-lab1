@@ -9,15 +9,29 @@ Brick Number: ...
 
 Lab Number: 1
 
-Problem Number: 2
+Problem Number: 4
  
 Brief Program/Problem Description: 
 
-	...
+	Executes a predefined sequence of differential-drive motor commands while
+    estimating the robot's final pose using dead reckoning. The resulting
+    encoder-based position and orientation estimate is then displayed for
+    comparison with the robot's measured final pose.
+
 
 Brief Solution Summary:
 
-	Algorithmic idea, underlying theory, etc...
+	The program creates a Robot object and executes a sequence of left and
+    right motor power commands for specified durations using executeCommandsAsync(). 
+    During execution, the Robot class continuously updates its Odometry object 
+    from the wheel encoder measurements.
+
+    After the command sequence is complete, the estimated pose is retrieved from the odometry system 
+    and displayed in both the terminal and on the EV3 screen. The implementation relies 
+    on the dead-reckoning model in the Odometry class, where wheel encoder changes are converted into left and
+    right wheel motion and integrated using the differential-drive kinematic model to estimate x, y, 
+    and orientation over time.
+
 
 Used Resources/Collaborators:
 	...
@@ -48,10 +62,6 @@ COMMANDS = [
 
 # ===================== Module ====================== #
 def deadReckoning():
-    """
-    Dead reckoning method for 4.1/2/3. Prints pose.
-    """
-        
     Menu([
         Text("Performing Dead Reckoning")
     ]).draw()

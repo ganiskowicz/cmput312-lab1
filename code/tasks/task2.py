@@ -13,11 +13,18 @@ Problem Number: 2
  
 Brief Program/Problem Description: 
 
-	...
+	The goal is to measure and analyze the error of the differential-drive robot during straight-line and rotational motion 
+    at several commanded velocities. The program executes the required motions, estimates the resulting
+    pose using wheel-encoder odometry, calculates the error relative to the expected pose, and displays 
+    the results on the EV3 brick.
 
 Brief Solution Summary:
 
-	Algorithmic idea, underlying theory, etc...
+	After each motion, the expected pose is compared with the pose estimated
+    by the Robot's odometry system. Translation error, x and y error, and angular error are calculated 
+    using the Pose class and displayed both in the terminal and on the EV3 display. 
+    A menu interface allows the user to select between 33%, 66%, and 100% velocity 
+    and choose either the linear or angular error experiment.
 
 Used Resources/Collaborators:
 	...
@@ -49,18 +56,10 @@ ANGULAR_VELOCITY = 180.0 # deg/s
 velocityMultiplier = 1
 
 def setVelocityMultiplier(multiplier):
-    """
-    Modify speed for 3.3
-    """
-
     global velocityMultiplier
     velocityMultiplier = multiplier
 
 def linear():
-    """
-    Linear movment method for 2.1 Straight-line error. Prints pose.
-    """
-
     Menu([
         Text("Performing Linear"),
         Text("Error Analysis")
@@ -107,10 +106,6 @@ def linear():
     return
 
 def angular():
-    """
-    Rotational movment method for 2.2 Rotation error. Prints pose.
-    """
-
     Menu([
         Text("Performing Angular"),
         Text("Error Analysis")
