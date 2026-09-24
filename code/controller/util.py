@@ -33,7 +33,13 @@ MAX = max
 
 # ===================== Module ====================== #
 def clamp(n, min, max):
+    """
+    Clamps a number between min and max
+    """
     return MAX(min, MIN(n, max))
 
 def sign(x):
+    """
+    Returns the sign of a number
+    """
     return (x > 0) - (x < 0)

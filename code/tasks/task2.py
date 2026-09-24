@@ -49,10 +49,18 @@ ANGULAR_VELOCITY = 180.0 # deg/s
 velocityMultiplier = 1
 
 def setVelocityMultiplier(multiplier):
+    """
+    Modify speed for 3.3
+    """
+
     global velocityMultiplier
     velocityMultiplier = multiplier
 
 def linear():
+    """
+    Linear movment method for 2.1 Straight-line error. Prints pose.
+    """
+
     Menu([
         Text("Performing Linear"),
         Text("Error Analysis")
@@ -99,6 +107,10 @@ def linear():
     return
 
 def angular():
+    """
+    Rotational movment method for 2.2 Rotation error. Prints pose.
+    """
+
     Menu([
         Text("Performing Angular"),
         Text("Error Analysis")

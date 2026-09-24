@@ -34,7 +34,7 @@ Brief Solution Summary:
     time so that approximately constant linear velocity is maintained.
 
 Used Resources/Collaborators:
-    CMPUT 312 Slide Materials
+    CMPUT 312 Slide materials
     https://ev3dev-lang.readthedocs.io/projects/python-ev3dev/en/stable/motors.html?highlight=speedrps#ev3dev2.motor.SpeedRPS
     https://en.wikipedia.org/wiki/Lemniscate_of_Bernoulli 
     https://en.wikipedia.org/wiki/Lemniscate_of_Gerono
@@ -66,6 +66,10 @@ from controller.util import clamp, sign
 
 # ===================== Module ====================== #
 class Robot:
+    """
+    Robot class for general purpose movment functions and implementations
+    """
+        
     def __init__(self):
         self.leftMotor = LargeMotor(Config.LEFT_MOTOR_PORT)
         self.rightMotor = LargeMotor(Config.RIGHT_MOTOR_PORT)
@@ -175,6 +179,10 @@ class Robot:
         return
 
     def bernoulliLemniscateAsync(self, scale, velocity=100.0):
+        """
+        Makes the robot travel in a lemniscate. In depth explaination explored in report.pdf
+        """
+
         # offset by math.pi / 2 to start in centre
         a = scale
         u = 0.0
@@ -218,6 +226,10 @@ class Robot:
         return
 
     def geronoLemniscateAsync(self, scale, velocity=100.0):
+        """
+        Alternate variation of a lemniscate
+        """
+
         a = scale
         u = 0.0
         last = time.monotonic()
@@ -272,6 +284,9 @@ class Robot:
         return
 
 def main():
+    """
+    Test function
+    """
     robot = Robot()
 
     print("Performing General Error Test")

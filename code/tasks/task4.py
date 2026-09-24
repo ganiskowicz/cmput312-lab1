@@ -48,6 +48,10 @@ COMMANDS = [
 
 # ===================== Module ====================== #
 def deadReckoning():
+    """
+    Dead reckoning method for 4.1/2/3. Prints pose.
+    """
+        
     Menu([
         Text("Performing Dead Reckoning")
     ]).draw()

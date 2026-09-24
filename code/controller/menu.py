@@ -79,6 +79,10 @@ class Menu:
         self.display.clear()
 
     def draw(self):
+        """
+        Refresh when a new button is selected
+        """
+                
         self.display.clear()
 
         yOffset = 0

@@ -37,7 +37,6 @@ import sys
 import os
 
 sys.path.append(os.path.abspath('../'))
-
 from controller.robot import Robot
 from controller.odometry import Pose
 from controller.menu import Menu, Text, Button
@@ -57,6 +56,10 @@ LEMNISCATE_SCALE = 500 # mm
 
 # ===================== Module ====================== #
 def straightLine():
+    """
+    Straight line movment method for 3.1. Prints pose.
+    """
+        
     Menu([
         Text("Performing Straight"),
         Text("Line")
@@ -103,6 +106,10 @@ def straightLine():
     return
 
 def circle():
+    """
+    Circle movment method for 3.2. Prints pose.
+    """
+        
     Menu([
         Text("Performing Circle")
     ]).draw()
@@ -148,6 +155,10 @@ def circle():
     return
 
 def rectangle():
+    """
+    Rectangle movment method for 3.3. Prints pose.
+    """
+        
     Menu([
         Text("Performing Rectangle")
     ]).draw()
@@ -198,6 +209,10 @@ def rectangle():
     return
 
 def geronoLemniscateAsync():
+    """
+    Alt Lemniscate movment method for 3.3. Prints pose.
+    """
+        
     Menu([
         Text("Performing Lemniscate")
     ]).draw()
@@ -241,6 +256,10 @@ def geronoLemniscateAsync():
     ]).inputAsync()
 
 def bernoulliLemniscateAsync():
+    """
+    Lemniscate movment method for 3.3. Prints pose.
+    """
+        
     Menu([
         Text("Performing Lemniscate")
     ]).draw()
